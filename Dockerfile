@@ -1,5 +1,5 @@
 FROM node:16.10-alpine AS build
-WORKDIR frontend/src/app
+WORKDIR /src/app
 COPY package.json package-lock.json ./
 EXPOSE 4200
 RUN npm install
