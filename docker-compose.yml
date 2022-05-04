@@ -1,11 +1,46 @@
+
 services:
-    angular-docker:
-        container_name: frontend_test
+    frontend:
+        container_name: frontend
         build: .
         ports:
-            - '9000:80'
+            - '9100:80'
+        networks:
+            - marketplace
+        depends_on:
+            - pgdb
+            - backend
+
+    pgdb:
+        container_name: pgdb
+        image: postgres
+        restart: always
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 1111
+            POSTGRES_DB: marketplace
+        ports:
+            - 5432:5432
+        networks:
+            - marketplace
+
+    backend:
+        container_name: backend
+        image: grioool/marketplace-backend:latest
+        restart: always
+        ports:
+            - '8080:8080'
+            - '80:80'
+        depends_on:
+            - pgdb
+        networks:
+            - marketplace
 
 networks:
-    default:
-        name: "marketplace"
-        external: true
+    marketplace:
+        driver: bridge
+
+volumes:
+    pgdata:
