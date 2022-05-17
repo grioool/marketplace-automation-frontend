@@ -21,7 +21,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@master
         env:
             ACCESS_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-            BRANCH: gh-pages
+            BRANCH: master
             FOLDER: dist/frontend
             BUILD_SCRIPT: npm install && npm run-script build
       -
