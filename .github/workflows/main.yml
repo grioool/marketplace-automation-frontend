@@ -16,14 +16,19 @@ jobs:
       -
         name: Checkout 
         uses: actions/checkout@v2
+        
+      - name: Install and Build 
+        run: |
+          npm ci
+          npm run build
 
-      - name: Build and Deploy
+      - name: Deploy 
         uses: JamesIves/github-pages-deploy-action@v4.3.3
-        env:
-            ACCESS_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-            BRANCH: gh-pages
-            FOLDER: dist/frontend
-            BUILD_SCRIPT: npm install && npm run-script build
+        with:
+          branch: gh-pages 
+          folder: dist/frontend
+          BUILD_SCRIPT: npm install && npm run-script build
+
       -
         name: Login to Docker Hub
         uses: docker/login-action@v1
