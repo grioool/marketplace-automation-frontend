@@ -16,6 +16,12 @@ jobs:
       -
         name: Checkout 
         uses: actions/checkout@v2
+        
+      - name: Install and Build 
+        run: |
+          npm ci
+          npm run build
+
       -
         name: Login to Github Packages 
       
