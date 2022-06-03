@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: marketplace-automation-frontend
+spec:
+    replicas: 2
+    selector:
+        matchLabels:
+            app: marketplace-automation-frontend
+    template:
+        metadata:
+            labels:
+                app: marketplace-automation-frontend
+                visualize: "true"
+        spec:
+            containers:
+                - name: marketplace-automation-frontend-pod
+                  image: grioool/marketplace-frontend
+                  ports:
+                      - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        visualize: "true"
+    name: marketplace-automation-frontend-service
+spec:
+    selector:
+        app: marketplace-automation-frontend
+    ports:
+        - name: http
+          protocol: TCP
+          port: 8080
+          targetPort: 8080
+    type: ClusterIP
